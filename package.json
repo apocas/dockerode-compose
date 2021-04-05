@@ -2,7 +2,7 @@
   "name": "dockerode-compose",
   "version": "1.0.0",
   "description": "docker-compose in nodejs using dockerode",
-  "main": "main.js",
+  "main": "lib/compose.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
