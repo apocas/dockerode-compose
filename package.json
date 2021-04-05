@@ -1,0 +1,23 @@
+{
+  "name": "dockerode-compose",
+  "version": "1.0.0",
+  "description": "docker-compose in nodejs using dockerode",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apocas/dockerode-compose.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/apocas/dockerode-compose/issues"
+  },
+  "homepage": "https://github.com/apocas/dockerode-compose#readme",
+  "dependencies": {
+    "dockerode": "^3.2.1",
+    "js-yaml": "^4.0.0"
+  }
+}
