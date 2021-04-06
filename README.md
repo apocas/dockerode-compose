@@ -1,8 +1,14 @@
 # dockerode-compose
 
-docker-compose in Node.js using [dockerode](https://github.com/apocas/dockerode).
+`docker-compose` in Node.js using [dockerode](https://github.com/apocas/dockerode).
+Everything is executed programmatically using `dockerode`, consequently Docker's API.
 
 Work in progress...
+Wordpress example builds successfully.
+
+ToDo:
+HostConfig (and other spec) needs to be finished.
+User friendly functions (partial deploys, etc) needs to be implemented.
 
 ## Installation
 
