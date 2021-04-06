@@ -30,5 +30,4 @@ secrets:
   server-secret:
     file: ./test/secret.txt
   server-secret-external:
-    file: ./teste/secret.txt
     external: true
