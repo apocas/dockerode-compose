@@ -2,7 +2,7 @@
   "name": "dockerode-compose",
   "version": "1.0.1",
   "description": "docker-compose in nodejs using dockerode",
-  "main": "./lib/compose.js",
+  "main": "./compose.js",
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha -R spec --exit"
   },

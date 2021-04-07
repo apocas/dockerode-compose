@@ -5,6 +5,6 @@ var docker = new Dockerode();
 var compose = new DockerodeCompose(docker);
 
 (async () => {
-  var state = await compose.compose('./test/wordpress.yml', 'wordpress');
+  var state = await compose.up('./test/wordpress.yml', 'wordpress');
   console.log(state);
 })();
