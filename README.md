@@ -36,7 +36,6 @@ var compose = new DockerodeCompose(docker);
 
 ## Tests
 
- * `docker pull ubuntu:latest` to prepare your system for the tests.
  * Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
 
 ## Examples
