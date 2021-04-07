@@ -34,6 +34,11 @@ var compose = new DockerodeCompose(docker);
 })();
 ```
 
+## Documentation
+
+- compose.up(file, project_name)
+- compose.pull(service) 
+
 ## Tests
 
  * Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
