@@ -29,14 +29,18 @@ var docker = new Dockerode();
 var compose = new DockerodeCompose(docker);
 
 (async () => {
-  var state = await compose.compose('./test/wordpress.yml', 'wordpress');
+  var state = await compose.up('./test/wordpress.yml', 'wordpress');
   console.log(state);
 })();
 ```
 
+## Documentation
+
+- compose.up(file, project_name)
+- compose.pull(service) 
+
 ## Tests
 
- * `docker pull ubuntu:latest` to prepare your system for the tests.
  * Tests are implemented using `mocha` and `chai`. Run them with `npm test`.
 
 ## Examples
