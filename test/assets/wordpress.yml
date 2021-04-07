@@ -26,8 +26,3 @@ services:
       WORDPRESS_DB_NAME: wordpress
 volumes:
   db_data: {}
-secrets:
-  server-secret:
-    file: ./test/secret.txt
-  server-secret-external:
-    external: true

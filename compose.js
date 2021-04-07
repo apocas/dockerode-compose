@@ -6,30 +6,53 @@ const volumes = require('./lib/volumes');
 const configs = require('./lib/configs');
 const networks = require('./lib/networks');
 const services = require('./lib/services');
+const tools = require('./lib/tools');
 
 class Compose {
-  constructor(dockerode) {
+  constructor(dockerode, file, projectName) {
     this.docker = dockerode;
+
+    if (file === undefined || projectName === undefined) {
+      throw new Error('please specify a file and a project name');
+    }
+
+    this.file = file;
+    this.projectName = projectName;
+
+    try {
+      this.recipe = yaml.load(fs.readFileSync(file, 'utf8'));
+    } catch (e) {
+      throw e;
+    }
   }
 
-  async up(file, projectName) {
-    var self = this;
+  async up() {
     var output = {};
-    if (projectName === undefined) {
-      throw new Error('please specify a project name');
-    }
-    self.projectName = projectName;
     try {
-      self.recipe = yaml.load(fs.readFileSync(file, 'utf8'));
-      output.secrets = await secrets(self.docker, self.projectName, self.recipe, output);
-      output.volumes = await volumes(self.docker, self.projectName, self.recipe, output);
-      output.configs = await configs(self.docker, self.projectName, self.recipe, output);
-      output.networks = await networks(self.docker, self.projectName, self.recipe, output);
-      output.services = await services(self.docker, self.projectName, self.recipe, output);
+      output.secrets = await secrets(this.docker, this.projectName, this.recipe, output);
+      output.volumes = await volumes(this.docker, this.projectName, this.recipe, output);
+      output.configs = await configs(this.docker, this.projectName, this.recipe, output);
+      output.networks = await networks(this.docker, this.projectName, this.recipe, output);
+      output.services = await services(this.docker, this.projectName, this.recipe, output);
       return output;
     } catch (e) {
       throw e;
     }
+  }
+
+  //ToDo: create a version with followprogress with onFinished
+  async pull(serviceN) {
+    var streams = [];
+    var serviceNames = (serviceN !== undefined) ? [serviceN] : tools.sortServices(this.recipe);
+    for (var serviceName of serviceNames) {
+      var service = this.recipe.services[serviceName];
+      try {
+        streams.push(await this.docker.pull(service.image));
+      } catch (e) {
+        throw e;
+      }
+    }
+    return streams;
   }
 }
 
