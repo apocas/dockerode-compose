@@ -6,7 +6,7 @@ Everything is executed programmatically using `dockerode`, consequently Docker's
 
 
 ### ToDo:
-* HostConfig (and other spec) needs to be finished.
+* Finish compose spec
 * User friendly functions (partial deploys, etc) needs to be implemented.
 
 ## Installation
