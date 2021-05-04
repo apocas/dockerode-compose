@@ -19,6 +19,8 @@ services:
     ports:
       - "8000:80"
     restart: always
+    volumes_from:
+      - db:ro
     environment:
       WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
