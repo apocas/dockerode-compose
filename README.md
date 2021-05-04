@@ -4,9 +4,6 @@
 
 Everything is executed programmatically using `dockerode`, consequently Docker's API.
 
-Work in progress...
-
-Wordpress example builds successfully.
 
 ### ToDo:
 * HostConfig (and other spec) needs to be finished.
