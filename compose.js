@@ -40,14 +40,20 @@ class Compose {
     }
   }
 
-  //ToDo: create a version with followprogress with onFinished
-  async pull(serviceN) {
+  async pull(serviceN, options) {
     var streams = [];
-    var serviceNames = (serviceN !== undefined) ? [serviceN] : tools.sortServices(this.recipe);
+    var serviceNames = (serviceN === undefined || serviceN === null) ? tools.sortServices(this.recipe) : [serviceN];
     for (var serviceName of serviceNames) {
       var service = this.recipe.services[serviceName];
       try {
-        streams.push(await this.docker.pull(service.image));
+        var stream = await this.docker.pull(service.image);
+        streams.push(stream);
+        if (options && options.verbose) {
+          stream.pipe(process.stdout);
+        }
+        if (options === undefined || (options && options.streams !== true)) {
+          await new Promise(fulfill => stream.once('end', fulfill));
+        }
       } catch (e) {
         throw e;
       }
