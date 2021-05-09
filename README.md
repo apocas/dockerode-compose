@@ -35,7 +35,7 @@ var compose = new DockerodeCompose(docker);
 ## Documentation
 
 - compose.up(file, project_name)
-- compose.pull(service) 
+- compose.pull(service, options) - omit service to pull all images, options.streams return the streams without waiting, options.verbose pipe the streams to stdout.
 
 ## Tests
 
