@@ -33,8 +33,8 @@ var compose = new DockerodeCompose(docker, './test/wordpress.yml', 'wordpress');
 ```
 
 ## Documentation
-
-- compose.up(file, project_name)
+- new DockerodeCompose(dockerode, file, project_name)
+- compose.up()
 - compose.pull(service, options) - omit service to pull all images, options.streams return the streams without waiting, options.verbose pipe the streams to stdout.
 
 ## Tests
