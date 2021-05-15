@@ -4,12 +4,9 @@
 
 Everything is executed programmatically using `dockerode`, consequently Docker's API.
 
-Work in progress...
-
-Wordpress example builds successfully.
 
 ### ToDo:
-* HostConfig (and other spec) needs to be finished.
+* Finish compose spec
 * User friendly functions (partial deploys, etc) needs to be implemented.
 
 ## Installation
@@ -26,18 +23,19 @@ var Dockerode = require('dockerode');
 var DockerodeCompose = require('dockerode-compose');
 
 var docker = new Dockerode();
-var compose = new DockerodeCompose(docker);
+var compose = new DockerodeCompose(docker, './test/wordpress.yml', 'wordpress');
 
 (async () => {
-  var state = await compose.up('./test/wordpress.yml', 'wordpress');
+  await compose.pull();
+  var state = await compose.up();
   console.log(state);
 })();
 ```
 
 ## Documentation
-
-- compose.up(file, project_name)
-- compose.pull(service) 
+- new DockerodeCompose(dockerode, file, project_name)
+- compose.up()
+- compose.pull(service, options) - omit service to pull all images, options.streams return the streams without waiting, options.verbose pipe the streams to stdout.
 
 ## Tests
 
