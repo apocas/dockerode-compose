@@ -1,0 +1,24 @@
+version: '3'
+services:
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: testdatabase
+      MYSQL_USER: testdatabase
+      MYSQL_PASSWORD: testdatabase12345
+
+  db_ext:
+    extends:
+      service: db
+    volumes:
+      - db_data:/var/lib/mysql
+    expose:
+      - "3306"
+
+volumes:
+  db_data: {}
