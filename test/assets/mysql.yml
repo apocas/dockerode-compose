@@ -1,0 +1,23 @@
+version: '3'
+services:
+
+  db:
+    extends:
+      file: ./test/assets/mysql_extends.yml
+      service: db
+    volumes:
+      - db_data:/var/lib/mysql
+    expose:
+      - "3306"
+  
+  db1:
+    extends:
+      file: ./test/assets/mysql_extends.yml
+      service: db_ext
+    volumes:
+      - db_data:/var/lib/mysql
+    expose:
+      - "3306"
+
+volumes:
+  db_data: {}

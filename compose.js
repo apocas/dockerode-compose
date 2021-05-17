@@ -29,6 +29,7 @@ class Compose {
   async up() {
     var output = {};
     try {
+      output.file = this.file;
       output.secrets = await secrets(this.docker, this.projectName, this.recipe, output);
       output.volumes = await volumes(this.docker, this.projectName, this.recipe, output);
       output.configs = await configs(this.docker, this.projectName, this.recipe, output);

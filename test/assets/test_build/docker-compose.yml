@@ -1,0 +1,8 @@
+services:
+  frontend:
+    build: ./build_things
+
+  backend:
+    build:
+      context: backend
+      #dockerfile: ../backend.Dockerfile
