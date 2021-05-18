@@ -5,4 +5,8 @@ services:
   backend:
     build:
       context: backend
+      cache_from:
+        - ubuntu
+      args:
+        GIT_COMMIT: cdc3b19
       #dockerfile: ../backend.Dockerfile

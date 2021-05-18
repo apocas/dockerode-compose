@@ -1,0 +1,56 @@
+version: '3'
+services:
+
+  db:
+    extends:
+      file: ./2-nodejs-projects/docker-compose.yml
+      service: db
+    volumes:
+      - db_data:/var/lib/mysql
+    expose:
+      - "3306"
+
+  app1:
+    extends:
+      file: ./2-nodejs-projects/docker-compose.yml
+      service: app1
+    depends_on: 
+      - db
+    ports:
+      - "5001-5005:5000"
+
+  app2:
+    extends:
+      file: ./2-nodejs-projects/docker-compose.yml
+      service: app2
+    ports:
+      - "5006-5010:5000"
+
+  app3:
+    extends:
+      file: ./2-nodejs-projects/docker-compose.yml
+      service: app3
+    ports:
+      - "5006-5010:5000"
+    
+  app4:
+    extends:
+      file: ./2-nodejs-projects/docker-compose.yml
+      service: app4
+    ports:
+      - "5006-5010:5000"
+
+  app5:
+    extends:
+      service: app4
+
+  app6:
+    extends:
+      service: app3
+
+  app7:
+    extends:
+      service: app2
+
+volumes:
+  db_data: {}

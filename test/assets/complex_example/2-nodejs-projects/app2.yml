@@ -1,0 +1,8 @@
+version: '3'
+services:
+
+  app2:
+    build: ./simple-node-app-1235
+  
+volumes:
+  db_data: {}
