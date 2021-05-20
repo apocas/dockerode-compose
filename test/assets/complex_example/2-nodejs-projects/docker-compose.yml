@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  db:
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: testpassword
+
+  app1:
+    build: ./simple-node-app
+    environment:
+      DB_HOST: db
+      DB_DATABASE: test
+      DB_USER: teste
+      DB_PASSWORD: testpassword
+
+  app2:
+    extends:
+      file: ./app2.yml
+      service: app2
+
+  app3:
+    extends:
+      service: app1
+
+  app4:
+    extends:
+      file: ./simple-node-app-1235/app4.yml
+      service: app4
+  
+volumes:
+  db_data: {}
