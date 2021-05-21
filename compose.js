@@ -51,6 +51,8 @@ class Compose {
         streams.push(stream);
         if (options && options.verbose) {
           stream.pipe(process.stdout);
+        } else {
+          stream.pipe(new require('stream').PassThrough());
         }
         if (options === undefined || (options && options.streams !== true)) {
           await new Promise(fulfill => stream.once('end', fulfill));

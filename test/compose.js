@@ -9,10 +9,18 @@ var docker = require('./spec_helper').docker;
 describe('compose', function () {
 
   describe('#pull', function () {
-    it("should pull all needed images", function (done) {
-      this.timeout(240000);
+    it("should pull all needed images with verbose", function (done) {
+      this.timeout(600000);
       (async () => {
         await compose.pull(null, { 'verbose': true });
+        done();
+      })();
+    });
+
+    it("should pull all needed images silently", function (done) {
+      this.timeout(600000);
+      (async () => {
+        await compose.pull();
         done();
       })();
     });
