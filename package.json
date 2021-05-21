@@ -1,6 +1,6 @@
 {
   "name": "dockerode-compose",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "docker-compose in nodejs using dockerode",
   "main": "./compose.js",
   "scripts": {

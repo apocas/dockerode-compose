@@ -1,5 +1,6 @@
 const yaml = require('js-yaml');
 const fs = require('fs');
+const stream = require('stream');
 
 const secrets = require('./lib/secrets');
 const volumes = require('./lib/volumes');
@@ -42,20 +43,26 @@ class Compose {
   }
 
   async pull(serviceN, options) {
+    options = options || {};
     var streams = [];
     var serviceNames = (serviceN === undefined || serviceN === null) ? tools.sortServices(this.recipe) : [serviceN];
     for (var serviceName of serviceNames) {
       var service = this.recipe.services[serviceName];
       try {
-        var stream = await this.docker.pull(service.image);
-        streams.push(stream);
-        if (options && options.verbose) {
-          stream.pipe(process.stdout);
-        } else {
-          stream.pipe(new require('stream').PassThrough());
+        var streami = await this.docker.pull(service.image);
+        streams.push(streami);
+
+        if (options.verbose === true) {
+          streami.pipe(process.stdout);
         }
-        if (options === undefined || (options && options.streams !== true)) {
-          await new Promise(fulfill => stream.once('end', fulfill));
+
+        if (options.streams !== true) {
+          if (options.verbose === true) {
+            streami.pipe(process.stdout);
+          } else {
+            streami.pipe(stream.PassThrough());
+          }
+          await new Promise(fulfill => streami.once('end', fulfill));
         }
       } catch (e) {
         throw e;

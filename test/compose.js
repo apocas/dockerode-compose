@@ -24,6 +24,15 @@ describe('compose', function () {
         done();
       })();
     });
+
+    it("should pull all needed images returning streams", function (done) {
+      this.timeout(600000);
+      (async () => {
+        var streams = await compose.pull(null, { 'streams': true });
+        expect(streams).to.be.ok;
+        done();
+      })();
+    });
   });
 
   describe('#up', function () {
