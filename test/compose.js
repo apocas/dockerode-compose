@@ -41,6 +41,16 @@ describe('compose', function () {
       (async () => {
         var report = await compose.up();
         expect(report.services).to.be.ok;
+        await new Promise(r => setTimeout(r, 2000));
+        let listContainers = await docker.listContainers({ 'all': true });
+        for (var containerInfo of listContainers) {
+          if (containerInfo.Names[0].includes("dockerodec_wordpress")) {
+            let container = docker.getContainer(containerInfo.Id);
+            if (containerInfo.State == 'running')
+              await container.stop();
+            await container.remove();
+          }
+        }
         done();
       })();
     });
@@ -52,6 +62,16 @@ describe('compose', function () {
       (async () => {
         var report = await compose_complex.up();
         expect(report.services).to.be.ok;
+        await new Promise(r => setTimeout(r, 5000));
+        let listContainers = await docker.listContainers({ 'all': true });
+        for (var containerInfo of listContainers) {
+          if (containerInfo.Names[0].includes("dockerodec_complex")) {
+            let container = docker.getContainer(containerInfo.Id);
+            if (containerInfo.State == 'running')
+              await container.stop();
+            await container.remove();
+          }
+        }
         done();
       })();
     });
@@ -63,6 +83,34 @@ describe('compose', function () {
       (async () => {
         var report = await compose_build.up();
         expect(report.services).to.be.ok;
+        await new Promise(r => setTimeout(r, 5000));
+        let listContainers = await docker.listContainers({ 'all': true });
+        for (var containerInfo of listContainers) {
+          if (containerInfo.Names[0].includes("dockerodec_build")) {
+            let container = docker.getContainer(containerInfo.Id);
+            if (containerInfo.State == 'running')
+              await container.stop();
+            await container.remove();
+          }
+        }
+        done();
+      })();
+    });
+    it("should do compose up example with build(verbose)", function (done) {
+      this.timeout(60000);
+      (async () => {
+        var report = await compose_build.up({ 'verbose': true });
+        expect(report.services).to.be.ok;
+        await new Promise(r => setTimeout(r, 5000));
+        let listContainers = await docker.listContainers({ 'all': true });
+        for (var containerInfo of listContainers) {
+          if (containerInfo.Names[0].includes("dockerodec_build")) {
+            let container = docker.getContainer(containerInfo.Id);
+            if (containerInfo.State == 'running')
+              await container.stop();
+            await container.remove();
+          }
+        }
         done();
       })();
     });
