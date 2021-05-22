@@ -27,7 +27,7 @@ class Compose {
     }
   }
 
-  async up() {
+  async up(options) {
     var output = {};
     try {
       output.file = this.file;
@@ -35,7 +35,7 @@ class Compose {
       output.volumes = await volumes(this.docker, this.projectName, this.recipe, output);
       output.configs = await configs(this.docker, this.projectName, this.recipe, output);
       output.networks = await networks(this.docker, this.projectName, this.recipe, output);
-      output.services = await services(this.docker, this.projectName, this.recipe, output);
+      output.services = await services(this.docker, this.projectName, this.recipe, output, options);
       return output;
     } catch (e) {
       throw e;
