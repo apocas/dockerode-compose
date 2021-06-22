@@ -79,7 +79,7 @@ describe('compose', function () {
 
   describe('#up_build', function () {
     it("should do compose up example with build", function (done) {
-      this.timeout(120000);
+      this.timeout(180000);
       (async () => {
         var report = await compose_build.up();
         expect(report.services).to.be.ok;
@@ -97,7 +97,7 @@ describe('compose', function () {
       })();
     });
     it("should do compose up example with build(verbose)", function (done) {
-      this.timeout(120000);
+      this.timeout(180000);
       (async () => {
         var report = await compose_build.up({ 'verbose': true });
         expect(report.services).to.be.ok;
