@@ -1,0 +1,10 @@
+{
+  "include": ["compose.js", "lib/*.js"],
+  "exclude": ["node_modules/", "test/", "examples/"],
+  "compilerOptions": {
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outFile": "./index.d.ts"
+  }
+}
