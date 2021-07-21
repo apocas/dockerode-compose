@@ -3,8 +3,10 @@
   "version": "1.2.1",
   "description": "docker-compose in nodejs using dockerode",
   "main": "./compose.js",
+  "types": "./index.d.ts",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -R spec --exit"
+    "test": "./node_modules/mocha/bin/mocha -R spec --exit",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -28,6 +30,7 @@
   "devDependencies": {
     "chai": "~4.2.0",
     "memorystream": "~0.3.0",
-    "mocha": "^7.1.0"
+    "mocha": "^7.1.0",
+    "typescript": "^4.3.5"
   }
 }
