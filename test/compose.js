@@ -58,7 +58,7 @@ describe('compose', function () {
 
   describe('#up_complex', function () {
     it("should do compose up complex example with extends and build", function (done) {
-      this.timeout(60000);
+      this.timeout(300000);
       (async () => {
         var report = await compose_complex.up();
         expect(report.services).to.be.ok;
@@ -79,7 +79,7 @@ describe('compose', function () {
 
   describe('#up_build', function () {
     it("should do compose up example with build", function (done) {
-      this.timeout(120000);
+      this.timeout(300000);
       (async () => {
         var report = await compose_build.up();
         expect(report.services).to.be.ok;
@@ -97,7 +97,7 @@ describe('compose', function () {
       })();
     });
     it("should do compose up example with build(verbose)", function (done) {
-      this.timeout(120000);
+      this.timeout(300000);
       (async () => {
         var report = await compose_build.up({ 'verbose': true });
         expect(report.services).to.be.ok;
