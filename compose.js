@@ -27,15 +27,32 @@ class Compose {
     }
   }
 
+  async down(options) {
+    var output = {};
+    try { 
+      output.file = this.file;
+      output.services = await services.down(this.docker, this.projectName, this.recipe, output, options);
+      output.networks = await networks.down(this.docker, this.projectName, this.recipe, output);
+      if (options !== undefined) {
+        if (options.volumes) {
+          output.volumes = await volumes.down(this.docker, this.projectName, this.recipe, output);
+        }
+      }
+      return output;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   async up(options) {
     var output = {};
     try {
       output.file = this.file;
       output.secrets = await secrets(this.docker, this.projectName, this.recipe, output);
-      output.volumes = await volumes(this.docker, this.projectName, this.recipe, output);
+      output.volumes = await volumes.up(this.docker, this.projectName, this.recipe, output);
       output.configs = await configs(this.docker, this.projectName, this.recipe, output);
-      output.networks = await networks(this.docker, this.projectName, this.recipe, output);
-      output.services = await services(this.docker, this.projectName, this.recipe, output, options);
+      output.networks = await networks.up(this.docker, this.projectName, this.recipe, output);
+      output.services = await services.up(this.docker, this.projectName, this.recipe, output, options);
       return output;
     } catch (e) {
       throw e;
