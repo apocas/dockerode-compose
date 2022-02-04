@@ -1,0 +1,32 @@
+version: '2'
+services:
+  gost-db:
+    image: geodan/gost-db
+    volumes:
+      - postgis:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: gost
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+  gost:
+    image: geodan/gost
+    volumes:
+      - gost_conf:/gostserver/config
+    depends_on:
+      - gost-db
+    environment:
+      GOST_LOG_VERBOSE_FLAG: 1
+      GOST_DB_HOST: gost-db
+      GOST_SERVER_EXTERNAL_URI: "http://localhost:8080"
+
+  dashboard:
+    image: geodan/gost-dashboard
+    ports:
+      - "8080:8080"
+    depends_on:
+      - gost
+
+volumes:
+  postgis: {}
+  gost_conf: {}
