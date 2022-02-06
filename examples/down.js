@@ -18,5 +18,6 @@ if (process.argv.length > 2) {
 var compose = new DockerodeCompose(docker, yamlFile, projectName);
 
 (async () => {
-  console.log(await compose.pull());
+  var state = await compose.down({ volumes: true });
+  console.log(state);
 })();
