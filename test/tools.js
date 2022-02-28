@@ -14,6 +14,7 @@ describe('tools', function () {
         'db',
         'wordpress1',
         'wordpress2',
+        'wordpress6',
         'wordpress4',
         'wordpress5'
       ]);
