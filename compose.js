@@ -21,7 +21,8 @@ class Compose {
     this.projectName = projectName;
 
     try {
-      this.recipe = yaml.load(fs.readFileSync(file, 'utf8'));
+      let recipe = yaml.load(fs.readFileSync(file, 'utf8'));
+      this.recipe = tools.replaceEnvValue(recipe);
     } catch (e) {
       throw e;
     }
@@ -29,13 +30,29 @@ class Compose {
 
   async down(options) {
     var output = {};
-    try { 
+    try {
       output.file = this.file;
-      output.services = await services.down(this.docker, this.projectName, this.recipe, output, options);
-      output.networks = await networks.down(this.docker, this.projectName, this.recipe, output);
+      output.services = await services.down(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output,
+        options
+      );
+      output.networks = await networks.down(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output
+      );
       if (options !== undefined) {
         if (options.volumes) {
-          output.volumes = await volumes.down(this.docker, this.projectName, this.recipe, output);
+          output.volumes = await volumes.down(
+            this.docker,
+            this.projectName,
+            this.recipe,
+            output
+          );
         }
       }
       return output;
@@ -48,11 +65,37 @@ class Compose {
     var output = {};
     try {
       output.file = this.file;
-      output.secrets = await secrets(this.docker, this.projectName, this.recipe, output);
-      output.volumes = await volumes.up(this.docker, this.projectName, this.recipe, output);
-      output.configs = await configs(this.docker, this.projectName, this.recipe, output);
-      output.networks = await networks.up(this.docker, this.projectName, this.recipe, output);
-      output.services = await services.up(this.docker, this.projectName, this.recipe, output, options);
+      output.secrets = await secrets(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output
+      );
+      output.volumes = await volumes.up(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output
+      );
+      output.configs = await configs(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output
+      );
+      output.networks = await networks.up(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output
+      );
+      output.services = await services.up(
+        this.docker,
+        this.projectName,
+        this.recipe,
+        output,
+        options
+      );
       return output;
     } catch (e) {
       throw e;
@@ -62,7 +105,10 @@ class Compose {
   async pull(serviceN, options) {
     options = options || {};
     var streams = [];
-    var serviceNames = (serviceN === undefined || serviceN === null) ? tools.sortServices(this.recipe) : [serviceN];
+    var serviceNames =
+      serviceN === undefined || serviceN === null
+        ? tools.sortServices(this.recipe)
+        : [serviceN];
     for (var serviceName of serviceNames) {
       var service = this.recipe.services[serviceName];
       try {
@@ -79,7 +125,7 @@ class Compose {
           } else {
             streami.pipe(stream.PassThrough());
           }
-          await new Promise(fulfill => streami.once('end', fulfill));
+          await new Promise((fulfill) => streami.once('end', fulfill));
         }
       } catch (e) {
         throw e;
