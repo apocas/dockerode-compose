@@ -21,7 +21,7 @@
   ],
   "homepage": "https://github.com/apocas/dockerode-compose#readme",
   "dependencies": {
-    "dockerode": "^3.3.1",
+    "dockerode": "^3.3.0",
     "js-yaml": "^4.0.0",
     "tar-fs": "^2.1.1"
   },
