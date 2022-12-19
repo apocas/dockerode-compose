@@ -1,5 +1,6 @@
 const expect = require('chai').expect,
   assert = require('assert');
+const DockerodeCompose = require('../compose');
 
 var compose = require('./spec_helper').compose;
 var compose_complex = require('./spec_helper').compose_complex;
@@ -36,6 +37,35 @@ describe('compose', function () {
   });
 
   describe('#up', function () {
+    it("should do compose up", function (done) {
+      this.timeout(60000);
+      (async () => {
+        var report = await compose.up();
+        expect(report.services).to.be.ok;
+        done();
+      })();
+    });
+    afterEach('clean up', function (done) {
+      this.timeout(60000);
+      (async () => {
+        await compose.down({ volumes: true });
+        done();
+      })();
+    });
+  });
+
+  describe('#up with env', function () {
+
+    const envMap = {
+      WORDPRESS_DB_USER: 'wordpress',
+      WORDPRESS_DB_PASSWORD: 'password'
+    };
+    const getProperty = (key) => {
+      // without default value will be throwed error in case of missing
+      return envMap[key] || 'Default value';
+    }
+
+    var compose = new DockerodeCompose(docker, './test/assets/wordpress_env.yml', 'wordpress_env', getProperty);
     it("should do compose up", function (done) {
       this.timeout(60000);
       (async () => {
