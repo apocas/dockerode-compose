@@ -1,25 +1,25 @@
 {
-  "name": "dockerode-compose",
-  "version": "1.3.3",
+  "name": "dockerode-compose2",
+  "version": "1.3.4",
   "description": "docker-compose in nodejs using dockerode",
   "main": "./compose.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha -R spec --exit"
+    "test": "mocha -R spec --exit"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apocas/dockerode-compose.git"
+    "url": "git+https://github.com/cplepage/dockerode-compose.git"
   },
   "author": "Pedro Dias <petermdias@gmail.com>",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/apocas/dockerode-compose/issues"
+    "url": "https://github.com/cplepage/dockerode-compose/issues"
   },
   "keywords": [
     "docker",
     "docker-compose"
   ],
-  "homepage": "https://github.com/apocas/dockerode-compose#readme",
+  "homepage": "https://github.com/cplepage/dockerode-compose#readme",
   "dependencies": {
     "dockerode": "^3.3.0",
     "js-yaml": "^4.0.0",
