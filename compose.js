@@ -1,5 +1,4 @@
-const yaml = require('js-yaml');
-const fs = require('fs');
+const { readYamlEnvSync } = require('yaml-env-defaults');
 const stream = require('stream');
 
 const secrets = require('./lib/secrets');
@@ -10,7 +9,7 @@ const services = require('./lib/services');
 const tools = require('./lib/tools');
 
 class Compose {
-  constructor(dockerode, file, projectName) {
+  constructor(dockerode, file, projectName, customEnv = undefined) {
     this.docker = dockerode;
 
     if (file === undefined || projectName === undefined) {
@@ -19,9 +18,10 @@ class Compose {
 
     this.file = file;
     this.projectName = projectName;
+    this.loadYaml = (path) => readYamlEnvSync(path, customEnv);
 
     try {
-      this.recipe = yaml.load(fs.readFileSync(file, 'utf8'));
+      this.recipe = this.loadYaml(file);
     } catch (e) {
       throw e;
     }
@@ -52,7 +52,7 @@ class Compose {
       output.volumes = await volumes.up(this.docker, this.projectName, this.recipe, output);
       output.configs = await configs(this.docker, this.projectName, this.recipe, output);
       output.networks = await networks.up(this.docker, this.projectName, this.recipe, output);
-      output.services = await services.up(this.docker, this.projectName, this.recipe, output, options);
+      output.services = await services.up(this.docker, this.projectName, this.recipe, output, options, this.loadYaml);
       return output;
     } catch (e) {
       throw e;
