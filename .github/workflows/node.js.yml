@@ -10,13 +10,13 @@ on:
     branches: [ main ]
 
 jobs:
-  build:
+  build_nodejs:
 
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x]
+        node-version: [14.x, 16.x, 18.x, 19.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -29,3 +29,21 @@ jobs:
     - run: npm ci
     - run: npm run build --if-present
     - run: npm test
+
+  build_bun:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      - uses: oven-sh/setup-bun@v1
+    
+      - name: Provisioning
+        run: |
+          docker --version
+          bun -v
+
+      - name: Bun install
+        run: bun install
+
+      - name: Bun Tests
+        run: bun run test
